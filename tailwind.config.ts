@@ -12,6 +12,12 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        sans: ["Poppins", "sans-sarif"],
+      },
+      gridTemplateColumns: {
+        "70/30": "75% 25%",
+      },
     },
   },
   plugins: [],
