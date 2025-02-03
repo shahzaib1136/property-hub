@@ -9,7 +9,64 @@ import {
 } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 
+// Reusable component for Rate display
+const RateItem = ({ label, amount }: { label: string; amount?: number }) => (
+  <div className="flex items-center justify-center mb-4 border-b border-gray-200 md:border-b-0 pb-4 md:pb-0">
+    <div className="text-gray-500 mr-2 font-bold">{label}</div>
+    {amount ? (
+      <div className="text-2xl font-bold text-blue-500">
+        ${amount.toLocaleString()}
+      </div>
+    ) : (
+      <FaXmark className="text-2xl text-red-700" />
+    )}
+  </div>
+);
+
+// Reusable component for Property Stats
+const PropertyStats = ({
+  beds,
+  baths,
+  square_feet,
+}: {
+  beds?: number;
+  baths?: number;
+  square_feet?: number;
+}) => (
+  <div className="flex justify-center gap-4 text-blue-500 mb-4 text-xl space-x-9">
+    <p>
+      <FaBed /> {beds ?? "N/A"}
+    </p>
+    <p>
+      <FaBath /> {baths ?? "N/A"}
+    </p>
+    <p>
+      <FaRulerCombined /> {square_feet ?? "N/A"} sqft
+    </p>
+  </div>
+);
+
+// Reusable component for Amenities
+const Amenities = ({ amenities }: { amenities: string[] }) => (
+  <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 list-none">
+    {amenities.length ? (
+      amenities.map((item) => (
+        <li className="flex items-center" key={item}>
+          <FaCheck className="text-green-600 mr-2" /> {item}
+        </li>
+      ))
+    ) : (
+      <p className="text-gray-500">No amenities listed</p>
+    )}
+  </ul>
+);
+
 function PropertyDetail({ property }: { property?: Property }) {
+  if (!property)
+    return (
+      <p className="text-center text-gray-500">Property details unavailable.</p>
+    );
+
   const {
     type,
     name,
@@ -20,96 +77,52 @@ function PropertyDetail({ property }: { property?: Property }) {
     square_feet,
     description,
     amenities = [],
-  } = property || {};
+  } = property;
 
   return (
     <main>
-      <div className="bg-white p-6 rounded-lg shadow-md text-center md:text-left">
-        <div className="text-gray-500 mb-4">{type}</div>
+      <section className="bg-white p-6 rounded-lg shadow-md text-center md:text-left">
+        <p className="text-gray-500 mb-4">{type}</p>
         <h1 className="text-3xl font-bold mb-4">{name}</h1>
-        <div className="text-gray-500 mb-4 flex align-middle justify-center md:justify-start">
-          <FaMapMarkerAlt className="fa-solid fa-location-dot text-lg text-orange-700 mr-2" />
-          <p className="text-orange-700 leading-5">
-            {`${location?.street} ${location?.city}, ${location?.state} ${location?.zipcode}`}
-          </p>
-        </div>
+        {location && (
+          <div className="text-gray-500 mb-4 flex items-center justify-center md:justify-start">
+            <FaMapMarkerAlt className="text-lg text-orange-700 mr-2" />
+            <p className="text-orange-700 leading-5">{`${location.street}, ${location.city}, ${location.state} ${location.zipcode}`}</p>
+          </div>
+        )}
+      </section>
 
+      {/* Rates Section */}
+      <section className="bg-white p-6 rounded-lg shadow-md mt-6">
         <h3 className="text-lg font-bold my-6 bg-gray-800 text-white p-2">
           Rates & Options
         </h3>
         <div className="flex flex-col md:flex-row justify-around">
-          <div className="flex items-center justify-center mb-4 border-b border-gray-200 md:border-b-0 pb-4 md:pb-0">
-            <div className="text-gray-500 mr-2 font-bold">Nightly</div>
-            {rates?.nightly ?? (
-              <div className="text-2xl font-bold">
-                <FaXmark className="fa fa-xmark text-red-700" />
-              </div>
-            )}
-          </div>
-          <div className="flex items-center justify-center mb-4 border-b border-gray-200 md:border-b-0 pb-4 md:pb-0">
-            <div className="text-gray-500 mr-2 font-bold">Weekly</div>
-            {rates?.weekly ? (
-              <div className="text-2xl font-bold text-blue-500">
-                ${rates.weekly.toLocaleString()}
-              </div>
-            ) : (
-              <div className="text-2xl font-bold">
-                <FaXmark className="fa fa-xmark text-red-700" />
-              </div>
-            )}
-          </div>
-          <div className="flex items-center justify-center mb-4 pb-4 md:pb-0">
-            <div className="text-gray-500 mr-2 font-bold">Monthly</div>
-
-            {rates?.monthly ? (
-              <div className="text-2xl font-bold text-blue-500">
-                ${rates.monthly.toLocaleString()}
-              </div>
-            ) : (
-              <div className="text-2xl font-bold text-blue-500">
-                <FaXmark className="fa fa-xmark text-red-700" />
-              </div>
-            )}
-          </div>
+          <RateItem label="Nightly" amount={rates?.nightly} />
+          <RateItem label="Weekly" amount={rates?.weekly} />
+          <RateItem label="Monthly" amount={rates?.monthly} />
         </div>
-      </div>
+      </section>
 
-      <div className="bg-white p-6 rounded-lg shadow-md mt-6">
+      {/* Description & Details */}
+      <section className="bg-white p-6 rounded-lg shadow-md mt-6">
         <h3 className="text-lg font-bold mb-6">Description & Details</h3>
-        <div className="flex justify-center gap-4 text-blue-500 mb-4 text-xl space-x-9">
-          <p>
-            <FaBed className="fa-solid fa-bed" /> 3
-            <span className="hidden sm:inline">{beds}</span>
-          </p>
-          <p>
-            <FaBath className="fa-solid fa-bath" /> 2
-            <span className="hidden sm:inline">{baths}</span>
-          </p>
-          <p>
-            <FaRulerCombined className="fa-solid fa-ruler-combined" />
-            {square_feet} <span className="hidden sm:inline">sqft</span>
-          </p>
-        </div>
-        <p className="text-gray-500 mb-4">{description}</p>
-      </div>
+        <PropertyStats beds={beds} baths={baths} square_feet={square_feet} />
+        <p className="text-gray-500 mb-4">
+          {description || "No description available."}
+        </p>
+      </section>
 
-      <div className="bg-white p-6 rounded-lg shadow-md mt-6">
+      {/* Amenities Section */}
+      <section className="bg-white p-6 rounded-lg shadow-md mt-6">
         <h3 className="text-lg font-bold mb-6">Amenities</h3>
+        <Amenities amenities={amenities} />
+      </section>
 
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 list-none">
-          {amenities.map((amenitie: string) => {
-            return (
-              <li className="flex items-center" key={amenitie}>
-                <FaCheck className="fas fa-check text-green-600 mr-2" />{" "}
-                {amenitie}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-      <div className="bg-white p-6 rounded-lg shadow-md mt-6">
-        <div id="map"></div>
-      </div>
+      {/* Map Placeholder */}
+      <section className="bg-white p-6 rounded-lg shadow-md mt-6">
+        <div id="map">Map will be diplay here</div>
+      </section>
     </main>
   );
 }
