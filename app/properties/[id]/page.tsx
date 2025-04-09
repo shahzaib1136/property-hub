@@ -14,7 +14,7 @@ function PropertyPage() {
   const { id } = useParams<{ id: string }>();
 
   const [property, setProperty] = useState<Property | undefined>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { images = [] } = property || {};
 
@@ -39,8 +39,6 @@ function PropertyPage() {
       fetchPropertyById();
     }
   }, [id, property]);
-
-  console.log({ property });
 
   if (isLoading) {
     return <Spinner loading={isLoading} />;

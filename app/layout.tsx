@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import AuthSessionProvider from "@/components/AuthSessionProvider";
 
 import "@assets/styles/global.css";
 
@@ -50,13 +51,15 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="en">
-      <body className="flex flex-col min-h-screen">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-      </body>
-    </html>
+    <AuthSessionProvider>
+      <html lang="en">
+        <body className="flex flex-col min-h-screen">
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </body>
+      </html>
+    </AuthSessionProvider>
   );
 };
 
