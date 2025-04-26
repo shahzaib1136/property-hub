@@ -26,7 +26,7 @@ const HomeProperty: React.FC = async () => {
     }
 
     return topProperties.map((property) => (
-      <PropertyCard property={property as Property} key={property._id} />
+      <PropertyCard property={property as Property} key={property.id} />
     ));
   };
 

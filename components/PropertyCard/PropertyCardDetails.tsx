@@ -9,7 +9,7 @@ type PropertyCardDetailsProps = {
 const PropertyCardDetails: React.FC<PropertyCardDetailsProps> = ({
   property,
 }) => {
-  const { beds, baths, square_feet, rates } = property;
+  const { beds, baths, squareFeet, rates } = property;
 
   return (
     <div>
@@ -22,7 +22,7 @@ const PropertyCardDetails: React.FC<PropertyCardDetailsProps> = ({
           <span className="ml-1">Baths</span>
         </p>
         <p className="flex items-center">
-          <FaRulerCombined className="mr-2" /> {square_feet}{" "}
+          <FaRulerCombined className="mr-2" /> {squareFeet}{" "}
           <span className="ml-1">sqft</span>
         </p>
       </div>

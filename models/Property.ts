@@ -14,14 +14,14 @@ export interface IProperty extends Document {
   };
   beds: number;
   baths: number;
-  square_feet: number;
+  squareFeet: number;
   amenities: string[];
   rates: {
     weekly?: number;
     monthly?: number;
     nightly?: number;
   };
-  seller_info: {
+  sellerInfo: {
     name?: string;
     email?: string;
     phone?: string;

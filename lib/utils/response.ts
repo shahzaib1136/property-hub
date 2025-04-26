@@ -18,12 +18,15 @@ export const createResponse = <T>(
 };
 
 // Utility function for handling errors
-export const handleError = (error: Error): Response => {
+export const handleError = (error: {
+  status?: number;
+  message?: string;
+}): Response => {
   console.error(error);
   return createResponse(
     false,
     null,
     error.message || "Something went wrong",
-    500
+    error.status || 500
   );
 };

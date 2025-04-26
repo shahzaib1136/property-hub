@@ -9,9 +9,8 @@ const Properties = async () => {
   const properties = (await fetchProperties()) || [];
 
   const sortedProperties = properties.sort((a, b) => {
-    // Convert to Date, ensuring the property is a valid date string
-    const dateA = new Date(a.createdAt);
-    const dateB = new Date(b.createdAt);
+    const dateA = a.createdAt ? new Date(a.createdAt) : new Date(0); // Fallback to epoch if undefined
+    const dateB = b.createdAt ? new Date(b.createdAt) : new Date(0); // Fallback to epoch if undefined
 
     // If the date is invalid, we need to return a fallback (optional)
     if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
@@ -32,7 +31,7 @@ const Properties = async () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {sortedProperties.map((property: Property) => (
-              <PropertyCard key={property._id} property={property} />
+              <PropertyCard key={property.id} property={property} />
             ))}
           </div>
         )}

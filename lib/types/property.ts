@@ -6,9 +6,9 @@ export type Location = {
 };
 
 export type Rates = {
-  weekly: number;
-  monthly: number;
-  nightly: number;
+  weekly: number | null;
+  monthly: number | null;
+  nightly: number | null;
 };
 
 export type SellerInfo = {
@@ -18,20 +18,20 @@ export type SellerInfo = {
 };
 
 export type Property = {
-  _id: string;
-  owner: string;
+  id?: string;
+  owner?: string;
   name: string;
   type: string;
   description: string;
   location: Location;
-  beds: number;
-  baths: number;
-  square_feet: number;
+  beds: number | null;
+  baths: number | null;
+  squareFeet: number | null;
   amenities: string[];
   rates: Rates;
-  seller_info: SellerInfo;
-  images: string[];
-  isFeatured: boolean;
-  createdAt: string; // ISO date string
-  updatedAt: string; // ISO date string
+  sellerInfo: SellerInfo;
+  images: (string | File)[];
+  isFeatured?: boolean;
+  createdAt?: string; // ISO date string
+  updatedAt?: string; // ISO date string
 };

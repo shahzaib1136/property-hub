@@ -10,7 +10,13 @@ import {
 import { FaXmark } from "react-icons/fa6";
 
 // Reusable component for Rate display
-const RateItem = ({ label, amount }: { label: string; amount?: number }) => (
+const RateItem = ({
+  label,
+  amount,
+}: {
+  label: string;
+  amount?: number | null;
+}) => (
   <div className="flex items-center justify-center mb-4 border-b border-gray-200 md:border-b-0 pb-4 md:pb-0">
     <div className="text-gray-500 mr-2 font-bold">{label}</div>
     {amount ? (
@@ -27,11 +33,11 @@ const RateItem = ({ label, amount }: { label: string; amount?: number }) => (
 const PropertyStats = ({
   beds,
   baths,
-  square_feet,
+  squareFeet,
 }: {
-  beds?: number;
-  baths?: number;
-  square_feet?: number;
+  beds?: number | null;
+  baths?: number | null;
+  squareFeet?: number | null;
 }) => (
   <div className="flex justify-center gap-4 text-blue-500 mb-4 text-xl space-x-9">
     <p>
@@ -41,7 +47,7 @@ const PropertyStats = ({
       <FaBath /> {baths ?? "N/A"}
     </p>
     <p>
-      <FaRulerCombined /> {square_feet ?? "N/A"} sqft
+      <FaRulerCombined /> {squareFeet ?? "N/A"} sqft
     </p>
   </div>
 );
@@ -74,7 +80,7 @@ function PropertyDetail({ property }: { property?: Property }) {
     rates,
     beds,
     baths,
-    square_feet,
+    squareFeet,
     description,
     amenities = [],
   } = property;
@@ -107,7 +113,7 @@ function PropertyDetail({ property }: { property?: Property }) {
       {/* Description & Details */}
       <section className="bg-white p-6 rounded-lg shadow-md mt-6">
         <h3 className="text-lg font-bold mb-6">Description & Details</h3>
-        <PropertyStats beds={beds} baths={baths} square_feet={square_feet} />
+        <PropertyStats beds={beds} baths={baths} squareFeet={squareFeet} />
         <p className="text-gray-500 mb-4">
           {description || "No description available."}
         </p>

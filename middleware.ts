@@ -14,5 +14,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/properties/add", "/properties/:id*"], // List of paths to protect
+  matcher: ["/properties/add", "/properties/:id((?!$).*)"],
 };

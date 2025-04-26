@@ -15,19 +15,23 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
 
   return (
     <div className="rounded-xl shadow-md relative">
-      <Image
-        src={`/images/properties/${images[0]}`}
-        alt={name}
-        width={0}
-        height={0}
-        sizes="100vw"
-        className="w-full h-auto rounded-t-xl"
-      />
+      <div className="relative w-full h-64">
+        <Image
+          src={images[0] as string} // The first image in the images array
+          alt={name}
+          layout="fill" // This makes the image cover the div
+          objectFit="cover" // Ensure the image doesn't distort and fills the container
+          className="rounded-t-xl"
+        />
+      </div>
       <div className="p-4">
         <PropertyCardHeader type={type} name={name} rates={rates} />
         <PropertyCardDetails property={property} />
         <div className="border border-gray-100 mb-5"></div>
-        <PropertyCardFooter location={location} id={property._id} />
+        <PropertyCardFooter
+          location={location}
+          id={property.id || property.name}
+        />
       </div>
     </div>
   );

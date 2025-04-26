@@ -24,4 +24,23 @@ async function fetchProperty(id: string) {
   }
 }
 
-export { fetchProperties, fetchProperty };
+async function addProperty(data: Partial<Property> | FormData) {
+  try {
+    const res: Property = await axiosApi<Property>(
+      "/properties",
+      "POST",
+      data,
+      {
+        "Content-Type": "multipart/form-data",
+      }
+    );
+    return res;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Add property failed:", error.message);
+      throw new Error(error.message); // Now passing a string message
+    }
+  }
+}
+
+export { fetchProperties, fetchProperty, addProperty };

@@ -9,6 +9,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import Link from "next/link";
 import PropertyDetail from "@/components/PropertyDetail";
 import Spinner from "@/components/Spinner";
+import PropertyImages from "@/components/PropertyImages";
 
 function PropertyPage() {
   const { id } = useParams<{ id: string }>();
@@ -54,7 +55,7 @@ function PropertyPage() {
 
   return (
     <>
-      <PropertyHeaderImage image={images[0]} />
+      <PropertyHeaderImage image={images[0] as string} />
 
       <section>
         <div className="container m-auto py-6 px-6">
@@ -157,6 +158,7 @@ function PropertyPage() {
           </div>
         </div>
       </section>
+      <PropertyImages images={images as string[]} />
     </>
   );
 }

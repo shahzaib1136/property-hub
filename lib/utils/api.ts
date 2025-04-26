@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { camelizeKeys, decamelizeKeys } from "humps";
 
 // API base URL (can be different for development and production environments)
 const API_URL = process.env.NEXT_PUBLIC_API_DOMAIN || "http://localhost:3000";
@@ -26,7 +27,7 @@ class ApiError extends Error {
 const axiosApi = async <T>(
   endpoint: string,
   method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
-  data?: Record<string, unknown>, // Updated: specify type for body data (optional)
+  data?: Record<string, unknown> | FormData, // Updated: specify type for body data (optional)
   headers: Record<string, string> = {},
   params?: Record<string, string | number> // Added params for query parameters
 ): Promise<T> => {
@@ -34,15 +35,24 @@ const axiosApi = async <T>(
     // Default headers (You can include Authorization token or other headers)
     const defaultHeaders = {
       "Content-Type": "application/json",
+      // "Content-Type": "multipart/form-data",
       // Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
       ...headers,
     };
+
+    let payload;
+
+    if (headers["Content-Type"] === "multipart/form-data") {
+      payload = data;
+    } else if (data) {
+      payload = decamelizeKeys(data);
+    }
 
     // Request configuration
     const config: AxiosRequestConfig = {
       method,
       url: `${API_URL}${endpoint}`,
-      data, // If method is POST, PUT, DELETE, this will be the body
+      data: payload,
       headers: defaultHeaders,
       params,
     };
@@ -51,7 +61,7 @@ const axiosApi = async <T>(
     const response: AxiosResponse<ApiResponse<T>> = await axios(config);
 
     // Return the response data
-    return response.data.data; // Extract the actual data from the response
+    return camelizeKeys(response.data.data) as T; // Extract the actual data from the response
   } catch (error: unknown) {
     console.error("API request error:", error);
 
