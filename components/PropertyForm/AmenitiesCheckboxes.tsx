@@ -26,25 +26,29 @@ interface AmenitiesCheckboxesProps {
 const AmenitiesCheckboxes: React.FC<AmenitiesCheckboxesProps> = ({
   handleChange,
   fields,
-}) => (
-  <div className="mb-4">
-    <h3 className="block text-gray-700 font-bold mb-2">Amenities</h3>
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-      {amenities.map((item) => (
-        <label key={item} className="inline-flex items-center">
-          <input
-            type="checkbox"
-            name="amenities"
-            value={item}
-            className="mr-2"
-            onChange={handleChange}
-            checked={fields?.amenities?.includes(item)}
-          />
-          {item}
-        </label>
-      ))}
+}) => {
+  console.log("1122", { fields });
+  return (
+    <div className="mb-4">
+      <h3 className="block text-gray-700 font-bold mb-2">Amenities</h3>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+        {amenities.map((item) => (
+          <label key={item} className="inline-flex items-center">
+            <input
+              type="checkbox"
+              name="amenities"
+              value={item}
+              className="mr-2"
+              onChange={handleChange}
+              checked={fields?.amenities?.includes(item)}
+              key={item}
+            />
+            {item}
+          </label>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default AmenitiesCheckboxes;

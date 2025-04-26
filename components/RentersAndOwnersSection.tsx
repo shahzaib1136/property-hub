@@ -1,5 +1,5 @@
 import React from "react";
-import PropertyActionCard from "./propertyActionCard";
+import PropertyActionCard from "@/components/PropertyActionCard";
 
 const RentersAndOwnersSection = () => {
   return (

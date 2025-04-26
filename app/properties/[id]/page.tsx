@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 import { useParams } from "next/navigation";
-import { fetchProperty } from "@lib/utils/requests";
+import { fetchProperty } from "@lib/api/propertiesApi";
 import { Property } from "@lib/types/property";
 import PropertyHeaderImage from "@/components/PropertyHeaderImage";
 import { FaArrowLeft } from "react-icons/fa";

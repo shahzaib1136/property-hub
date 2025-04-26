@@ -74,8 +74,8 @@ const UserMenu: React.FC<UserMenuProps> = ({
         className="h-8 w-8 rounded-full"
         src={session?.user?.image || defaultProfile}
         alt="User profile"
-        width={40}
-        height={40}
+        width={240}
+        height={240}
       />
     </button>
     {isOpen && (
@@ -85,7 +85,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
         aria-orientation="vertical"
       >
         <MenuLink
-          href="/profile.html"
+          href="/profile"
           label="Your Profile"
           isActive={false}
           isUserMenu={true}

@@ -6,12 +6,12 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
-        pathname: "**", // Optional: define the path structure if needed
+        pathname: "/**", // Optional: define the path structure if needed
       },
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
-        pathname: "**", // Optional: define the path structure if needed
+        pathname: "/**", // Optional: define the path structure if needed
       },
     ],
   },
