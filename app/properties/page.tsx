@@ -3,7 +3,7 @@ import React from "react";
 import { Property } from "@lib/types/property";
 
 import PropertyCard from "@/components/PropertyCard";
-import { fetchProperties } from "@lib/utils/requests";
+import { fetchProperties } from "@lib/api/propertiesApi";
 
 const Properties = async () => {
   const properties = (await fetchProperties()) || [];

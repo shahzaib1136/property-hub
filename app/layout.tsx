@@ -3,8 +3,10 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AuthSessionProvider from "@/components/AuthSessionProvider";
+import { ToastContainer } from "react-toastify";
 
 import "@assets/styles/global.css";
+import "react-toastify/dist/ReactToastify.css"; // Important: import styles!
 
 export const metadata: Metadata = {
   title: "Find Your Dream Property | PropertyFinder",
@@ -57,6 +59,17 @@ const RootLayout = ({
           <Navbar />
           <main>{children}</main>
           <Footer />
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+          />
         </body>
       </html>
     </AuthSessionProvider>

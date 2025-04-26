@@ -2,8 +2,9 @@
 import React, { FormEvent, useState, useEffect } from "react";
 import { Property } from "@lib/types/property";
 import PropertyForm from "@/components/PropertyForm";
-import { addProperty } from "@lib/utils/requests";
+import { addProperty } from "@lib/api/propertiesApi";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 //Add formik validation later
 const INITIAL_FIELDS_VALUES = {
@@ -14,7 +15,7 @@ const INITIAL_FIELDS_VALUES = {
   beds: null,
   baths: null,
   squareFeet: null,
-  amenities: [""],
+  amenities: [],
   rates: {
     weekly: null,
     monthly: null,
@@ -39,11 +40,12 @@ const AddProperties = () => {
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {
-    event.preventDefault();
     const target = event.target;
     const { name, value, type } = target;
 
     if (type === "file" && name === "images") {
+      event.preventDefault();
+
       const files = (event.target as HTMLInputElement).files;
 
       if (files && files.length > 4) {
@@ -131,9 +133,11 @@ const AddProperties = () => {
 
     try {
       const newProperty = await addProperty(formData);
+      toast.success("Property added successfully!");
       router.push(`/properties/${newProperty?.id}`);
     } catch (error) {
       console.error("Error:", error);
+      toast.error("Failed to add property!");
     }
   };
 
