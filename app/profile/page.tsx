@@ -112,12 +112,12 @@ function Profile() {
                       </p>
                     </div>
                     <div className="mt-2">
-                      <a
+                      <Link
                         href={`/properties/${property.id}/edit`}
                         className="bg-blue-500 text-white px-3 py-3 rounded-md mr-2 hover:bg-blue-600"
                       >
                         Edit
-                      </a>
+                      </Link>
                       <button
                         className="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600"
                         type="button"

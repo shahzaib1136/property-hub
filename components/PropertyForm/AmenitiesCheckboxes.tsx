@@ -27,7 +27,6 @@ const AmenitiesCheckboxes: React.FC<AmenitiesCheckboxesProps> = ({
   handleChange,
   fields,
 }) => {
-  console.log("1122", { fields });
   return (
     <div className="mb-4">
       <h3 className="block text-gray-700 font-bold mb-2">Amenities</h3>

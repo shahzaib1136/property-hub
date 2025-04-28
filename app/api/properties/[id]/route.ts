@@ -83,3 +83,70 @@ export const DELETE = async (
     return handleError(error as Error);
   }
 };
+
+export const PUT = async (
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) => {
+  const awaitedParams = await params;
+  const { id } = awaitedParams;
+
+  try {
+    const session = await getUserSession();
+
+    if (!session?.userID || !id) {
+      return createResponse(
+        false,
+        null,
+        "Property ID and User ID are required!",
+        400
+      );
+    }
+
+    if (!session) {
+      return handleError({ message: "Unauthorized", status: 401 });
+    }
+
+    await connectDB;
+
+    const property = await Property.findOne({
+      _id: id,
+      owner: session.userID,
+    });
+
+    if (!property) {
+      return createResponse(
+        false,
+        null,
+        "Property not found or does not belong to user!",
+        404
+      );
+    }
+
+    // verify user ownership
+    if (property.owner.toString() !== session.userID.toString()) {
+      return createResponse(
+        false,
+        null,
+        "Property does not belong to user!",
+        403
+      );
+    }
+
+    const data = await request.json();
+
+    const updatedProperty = await Property.findByIdAndUpdate(id, data, {
+      new: true, // return updated document
+    });
+
+    return createResponse(
+      true,
+      updatedProperty,
+      "Property updated successfully",
+      200
+    );
+  } catch (error) {
+    console.error("Error updating property:", error);
+    return handleError(error as Error);
+  }
+};
