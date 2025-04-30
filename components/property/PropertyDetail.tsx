@@ -8,6 +8,7 @@ import {
   FaCheck,
 } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
+import PropertyMap from "./PropertyMap";
 
 // Reusable component for Rate display
 const RateItem = ({
@@ -127,7 +128,7 @@ function PropertyDetail({ property }: { property?: Property }) {
 
       {/* Map Placeholder */}
       <section className="bg-white p-6 rounded-lg shadow-md mt-6">
-        <div id="map">Map will be diplay here</div>
+        <PropertyMap location={property.location} />
       </section>
     </main>
   );

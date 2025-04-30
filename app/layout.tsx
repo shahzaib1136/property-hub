@@ -1,12 +1,13 @@
 import React from "react";
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import AuthSessionProvider from "@/components/AuthSessionProvider";
+import Navbar from "@/components/common/Navbar";
+import Footer from "@/components/common/Footer";
+import AuthSessionProvider from "@/components/layout/AuthSessionProvider";
 import { ToastContainer } from "react-toastify";
 
 import "@assets/styles/global.css";
 import "react-toastify/dist/ReactToastify.css"; // Important: import styles!
+import { AppProvider } from "@/app/context/AppContext";
 
 export const metadata: Metadata = {
   title: "Find Your Dream Property | PropertyFinder",
@@ -54,24 +55,26 @@ const RootLayout = ({
 }>) => {
   return (
     <AuthSessionProvider>
-      <html lang="en">
-        <body className="flex flex-col min-h-screen">
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-          <ToastContainer
-            position="top-right"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-          />
-        </body>
-      </html>
+      <AppProvider>
+        <html lang="en">
+          <body className="flex flex-col min-h-screen">
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop
+              closeOnClick
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="colored"
+            />
+          </body>
+        </html>
+      </AppProvider>
     </AuthSessionProvider>
   );
 };

@@ -3,6 +3,7 @@ import connectDB from "@/config/database";
 import { createResponse, handleError } from "@lib/utils/response";
 import { NextRequest } from "next/server";
 import { getUserSession } from "@lib/utils/getUserSession";
+import Message from "@/models/Messages";
 
 export const GET = async (
   req: Request,
@@ -13,13 +14,33 @@ export const GET = async (
 
     // Await params to ensure it's resolved
     const { id } = await params;
+    const session = await getUserSession();
     const property = await Property.findById(id);
 
     if (!property) {
       return createResponse(false, undefined, "Property Not Found", 404);
     }
 
-    return createResponse(true, property, "Property fetched successfully", 200);
+    let hasContacted = false;
+
+    if (session?.userId) {
+      const existingMessage = await Message.findOne({
+        sender: session.userId,
+        property: id,
+        status: "sent",
+      });
+
+      if (existingMessage) {
+        hasContacted = true;
+      }
+    }
+
+    return createResponse(
+      true,
+      { ...property.toObject(), hasContacted },
+      "Property fetched successfully",
+      200
+    );
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
@@ -39,7 +60,7 @@ export const DELETE = async (
   try {
     const session = await getUserSession();
 
-    if (!session?.userID || !id) {
+    if (!session?.userId || !id) {
       return createResponse(
         false,
         null,
@@ -54,7 +75,7 @@ export const DELETE = async (
 
     await connectDB;
 
-    const property = await Property.findOne({ _id: id, owner: session.userID });
+    const property = await Property.findOne({ _id: id, owner: session.userId });
 
     if (!property) {
       return createResponse(
@@ -66,7 +87,7 @@ export const DELETE = async (
     }
 
     //verify user ownership
-    if (property.owner.toString() !== session.userID.toString()) {
+    if (property.owner.toString() !== session.userId.toString()) {
       return createResponse(
         false,
         null,
@@ -94,7 +115,7 @@ export const PUT = async (
   try {
     const session = await getUserSession();
 
-    if (!session?.userID || !id) {
+    if (!session?.userId || !id) {
       return createResponse(
         false,
         null,
@@ -111,7 +132,7 @@ export const PUT = async (
 
     const property = await Property.findOne({
       _id: id,
-      owner: session.userID,
+      owner: session.userId,
     });
 
     if (!property) {
@@ -124,7 +145,7 @@ export const PUT = async (
     }
 
     // verify user ownership
-    if (property.owner.toString() !== session.userID.toString()) {
+    if (property.owner.toString() !== session.userId.toString()) {
       return createResponse(
         false,
         null,

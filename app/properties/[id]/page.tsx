@@ -4,17 +4,20 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { fetchProperty } from "@lib/api/propertiesApi";
 import { Property } from "@lib/types/property";
-import PropertyHeaderImage from "@/components/PropertyHeaderImage";
+import PropertyHeaderImage from "@/components/property/PropertyHeaderImage";
 import { FaArrowLeft } from "react-icons/fa";
 import Link from "next/link";
-import PropertyDetail from "@/components/PropertyDetail";
-import Spinner from "@/components/Spinner";
-import PropertyImages from "@/components/PropertyImages";
+import PropertyDetail from "@/components/property/PropertyDetail";
+import Spinner from "@/components/common/Spinner";
+import PropertyImages from "@/components/property/PropertyImages";
+import BookmarkButton from "@/components/property/BookmarkButton";
+import ShareButton from "@/components/property/ShareButton";
+import PropertyContactForm from "@/components/PropertyForm/PropertyContactForm";
 
 function PropertyPage() {
   const { id } = useParams<{ id: string }>();
 
-  const [property, setProperty] = useState<Property | undefined>();
+  const [property, setProperty] = useState<Property>();
   const [isLoading, setIsLoading] = useState(true);
 
   const { images = [] } = property || {};
@@ -75,85 +78,9 @@ function PropertyPage() {
             <PropertyDetail property={property} />
 
             <aside className="space-y-4">
-              <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center">
-                <i className="fas fa-bookmark mr-2"></i> Bookmark Property
-              </button>
-              <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center">
-                <i className="fas fa-share mr-2"></i> Share Property
-              </button>
-
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <h3 className="text-xl font-bold mb-6">
-                  Contact Property Manager
-                </h3>
-                <form>
-                  <div className="mb-4">
-                    <label
-                      className="block text-gray-700 text-sm font-bold mb-2"
-                      htmlFor="name"
-                    >
-                      Name:
-                    </label>
-                    <input
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      id="name"
-                      type="text"
-                      placeholder="Enter your name"
-                      required
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label
-                      className="block text-gray-700 text-sm font-bold mb-2"
-                      htmlFor="email"
-                    >
-                      Email:
-                    </label>
-                    <input
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      id="email"
-                      type="email"
-                      placeholder="Enter your email"
-                      required
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label
-                      className="block text-gray-700 text-sm font-bold mb-2"
-                      htmlFor="phone"
-                    >
-                      Phone:
-                    </label>
-                    <input
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      id="phone"
-                      type="text"
-                      placeholder="Enter your phone number"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label
-                      className="block text-gray-700 text-sm font-bold mb-2"
-                      htmlFor="message"
-                    >
-                      Message:
-                    </label>
-                    <textarea
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 h-44 focus:outline-none focus:shadow-outline"
-                      id="message"
-                      placeholder="Enter your message"
-                    ></textarea>
-                  </div>
-                  <div>
-                    <button
-                      className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline flex items-center justify-center"
-                      type="submit"
-                    >
-                      <i className="fas fa-paper-plane mr-2"></i> Send Message
-                    </button>
-                  </div>
-                </form>
-              </div>
+              <BookmarkButton propertyId={id} />
+              <ShareButton property={property} />
+              <PropertyContactForm property={property} />
             </aside>
           </div>
         </div>

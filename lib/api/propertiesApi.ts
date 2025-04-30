@@ -1,6 +1,7 @@
 import { Property } from "@lib/types/property";
 
 import axiosApi from "@lib/utils/api";
+import { createQueryString } from "@lib/utils/searchParams";
 
 // Fetch all properties
 async function fetchProperties() {
@@ -93,6 +94,26 @@ async function updateProperty(id: string, data: Partial<Property> | FormData) {
   }
 }
 
+//Search properties
+async function fetchSearchProperties({
+  location,
+  propertyType,
+}: Record<string, string>) {
+  const query = createQueryString({ location, type: propertyType });
+
+  const url = `/properties/search${query}`;
+  try {
+    const res: Property[] = await axiosApi(url);
+
+    return res;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("fetch property failed:", error.message);
+      throw new Error(error.message); // Now passing a string message
+    }
+  }
+}
+
 export {
   fetchProperties,
   fetchProperty,
@@ -100,4 +121,5 @@ export {
   fetchUserProperties,
   deleteUserProperty,
   updateProperty,
+  fetchSearchProperties,
 };

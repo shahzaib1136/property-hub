@@ -8,7 +8,7 @@ import {
   fetchUserProperties,
 } from "@lib/api/propertiesApi";
 import { Property } from "@lib/types/property";
-import Spinner from "@/components/Spinner";
+import Spinner from "@/components/common/Spinner";
 import Link from "next/link";
 import { toast } from "react-toastify";
 

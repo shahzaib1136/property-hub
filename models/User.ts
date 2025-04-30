@@ -1,15 +1,13 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-// Define the user interface extending mongoose Document
 interface IUser extends Document {
-  username: string;
+  name: string;
   email: string;
   password: string;
   image: string;
   bookmarks: mongoose.Types.ObjectId[];
 }
 
-// Create the user schema
 const userSchema: Schema = new Schema(
   {
     username: {

@@ -1,3 +1,8 @@
+export type ErrorType = {
+  status?: number;
+  message?: string;
+};
+
 // Utility function for generating API responses
 export const createResponse = <T>(
   success: boolean,
@@ -18,10 +23,7 @@ export const createResponse = <T>(
 };
 
 // Utility function for handling errors
-export const handleError = (error: {
-  status?: number;
-  message?: string;
-}): Response => {
+export const handleError = (error: ErrorType): Response => {
   console.error(error);
   return createResponse(
     false,

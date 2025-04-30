@@ -36,7 +36,7 @@ export const POST = async (request: NextRequest) => {
     const session = await getUserSession();
 
     if (!session) {
-      return handleError({ message: "unauthorized", status: 404 });
+      return handleError({ message: "unauthorized", status: 401 });
     }
 
     const formData = await request.formData();
@@ -74,7 +74,7 @@ export const POST = async (request: NextRequest) => {
       amenities,
       rates,
       sellerInfo,
-      owner: session.userID,
+      owner: session.userId,
     };
 
     // Handle images

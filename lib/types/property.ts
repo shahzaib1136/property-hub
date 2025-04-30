@@ -34,4 +34,5 @@ export type Property = {
   isFeatured?: boolean;
   createdAt?: string; // ISO date string
   updatedAt?: string; // ISO date string
+  hasContacted: boolean;
 };

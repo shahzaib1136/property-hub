@@ -1,6 +1,5 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-// Define the property interface extending mongoose Document
 export interface IProperty extends Document {
   owner: mongoose.Types.ObjectId;
   name: string;
@@ -32,7 +31,6 @@ export interface IProperty extends Document {
   updatedAt: Date;
 }
 
-// Create the property schema
 const propertySchema: Schema = new Schema(
   {
     owner: {
