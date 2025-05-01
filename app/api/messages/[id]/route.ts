@@ -7,11 +7,11 @@ import { NextRequest } from "next/server";
 // PUT api/messages/:id
 export async function PUT(
   _: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const messageId = params.id;
-
   try {
+    const { id: messageId } = await params;
+
     await connectDB();
     const session = await getUserSession();
 
@@ -50,10 +50,11 @@ export async function PUT(
 
 export async function DELETE(
   _: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id: messageId } = await params;
+
     await connectDB();
     const session = await getUserSession();
 

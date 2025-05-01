@@ -7,7 +7,7 @@ import Message from "@/models/Messages";
 
 export const GET = async (
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) => {
   try {
     await connectDB();
@@ -53,11 +53,10 @@ export const GET = async (
 
 export const DELETE = async (
   _: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) => {
-  const { id } = params;
-
   try {
+    const { id } = await params;
     const session = await getUserSession();
 
     if (!session?.userId || !id) {
@@ -107,12 +106,10 @@ export const DELETE = async (
 
 export const PUT = async (
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) => {
-  const awaitedParams = await params;
-  const { id } = awaitedParams;
-
   try {
+    const { id } = await params;
     const session = await getUserSession();
 
     if (!session?.userId || !id) {

@@ -17,7 +17,7 @@ export const GET = async (request: NextRequest) => {
   const locationPattern = new RegExp(location, "i");
 
   try {
-    await connectDB;
+    await connectDB();
 
     const filters: PropertyFilter = {};
 
@@ -44,9 +44,7 @@ export const GET = async (request: NextRequest) => {
       "Properties fetched successfully",
       200
     );
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error fetching properties:", error);
 
     return handleError(error as Error);

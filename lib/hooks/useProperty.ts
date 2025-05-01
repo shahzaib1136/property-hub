@@ -17,6 +17,7 @@ export const INITIAL_FIELDS_VALUES = {
   },
   sellerInfo: { name: "", email: "", phone: "" },
   images: [],
+  hasContacted: false,
 };
 
 export const useProperty = () => {

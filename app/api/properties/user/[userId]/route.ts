@@ -5,16 +5,15 @@ import { NextRequest } from "next/server";
 
 export const GET = async (
   _: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) => {
-  const { userId } = params;
-
-  if (!userId) {
-    return createResponse(false, null, "User ID is required!", 404);
-  }
-
   try {
+    const { userId } = await params;
     await connectDB();
+
+    if (!userId) {
+      return createResponse(false, null, "User ID is required!", 404);
+    }
 
     const properties = await Property.find({ owner: userId });
 
