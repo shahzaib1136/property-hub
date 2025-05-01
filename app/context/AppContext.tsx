@@ -1,25 +1,22 @@
 "use client";
 import React, {
   createContext,
-  useState,
   useContext,
   ReactNode,
   useEffect,
+  useReducer,
 } from "react";
 import { useSession } from "next-auth/react"; // To access session data
 import { fetchUser } from "@lib/api/user";
-
-interface IUser {
-  id: string;
-  email: string;
-  name: string;
-  image?: string;
-  bookmarks: string[];
-}
+import { AppState, Action, ActionType } from "@lib/types/appContextTypes";
+import { appReducer, initialState } from "@/app/context/reducer";
+import { fetchMessages } from "@lib/api/messages";
+import { ErrorType } from "@lib/utils/response";
 
 interface AppContextType {
-  user: IUser | null;
-  setUser: (userData: IUser | null) => void;
+  state: AppState;
+  dispatch: React.Dispatch<Action>;
+  getMessages: () => Promise<void>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -29,38 +26,57 @@ interface AppProviderProps {
 }
 
 export const AppProvider = ({ children }: AppProviderProps) => {
-  const [user, setUser] = useState<IUser | null>(null);
+  const [state, dispatch] = useReducer(appReducer, initialState);
+
   const { data: session } = useSession(); // Get session data from NextAuth
   const { id } = session?.user || {};
 
-  // Update user data in the context
-  const updateUser = (userData: IUser | null) => {
-    setUser(userData); // Set user data in context
+  const getMessages = async () => {
+    try {
+      dispatch({ type: ActionType.FETCH_MESSAGES_START });
+
+      const messagesRes = (await fetchMessages()) || [];
+
+      dispatch({
+        type: ActionType.FETCH_MESSAGES_SUCCESS,
+        payload: messagesRes,
+      });
+    } catch (error: unknown) {
+      const err = error as ErrorType;
+      dispatch({
+        type: ActionType.FETCH_MESSAGES_ERROR,
+        payload: err.message || "Failed to fetch messages",
+      });
+    }
   };
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchInitialData = async () => {
       try {
-        const userData = await fetchUser(id as string);
+        // Fetch user
+        const user = await fetchUser(id as string);
+        dispatch({ type: ActionType.SET_USER, payload: user });
 
-        if (userData) {
-          setUser(userData);
-        } else {
-          setUser(null);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        updateUser(null);
+        await getMessages();
+      } catch (error: unknown) {
+        const err = error as ErrorType;
+
+        dispatch({
+          type: ActionType.FETCH_MESSAGES_ERROR,
+          payload: err.message || "Something went wrong",
+        });
+
+        console.error("Error loading initial data", error);
       }
     };
 
     if (!id) return;
 
-    fetchUserData();
+    fetchInitialData();
   }, [id]);
 
   return (
-    <AppContext.Provider value={{ user, setUser: updateUser }}>
+    <AppContext.Provider value={{ state, dispatch, getMessages }}>
       {children}
     </AppContext.Provider>
   );

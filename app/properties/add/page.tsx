@@ -1,6 +1,6 @@
 "use client";
 import React, { FormEvent, useState, useEffect } from "react";
-import PropertyForm from "@/components/PropertyForm";
+import PropertyForm from "@/components/AddPropertyForm";
 import { addProperty } from "@lib/api/propertiesApi";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";

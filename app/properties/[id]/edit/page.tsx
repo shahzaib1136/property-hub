@@ -4,7 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { fetchProperty, updateProperty } from "@lib/api/propertiesApi";
 import Spinner from "@/components/common/Spinner";
-import PropertyForm from "@/components/PropertyForm";
+import PropertyForm from "@/components/AddPropertyForm";
 import { useProperty } from "@lib/hooks/useProperty";
 import { toast } from "react-toastify";
 

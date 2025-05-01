@@ -1,5 +1,5 @@
 import InputField from "@/components/UI/InputField";
-import { ChangeHandler } from "@/components/PropertyForm/types";
+import { ChangeHandler } from "@/components/AddPropertyForm/types";
 import { Property, Rates } from "@lib/types/property";
 
 interface Props {

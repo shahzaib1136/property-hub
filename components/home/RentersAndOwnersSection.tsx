@@ -11,7 +11,7 @@ const RentersAndOwnersSection = () => {
             title="For Renters"
             description="Find your dream rental property. Bookmark properties and contact owners."
             linkText="Browse Properties"
-            linkHref="/properties.html"
+            linkHref="/properties"
             bgColor="bg-gray-100"
             buttonColor="bg-black hover:bg-gray-700"
             textColor=""
@@ -22,7 +22,7 @@ const RentersAndOwnersSection = () => {
             title="For Property Owners"
             description="List your properties and reach potential tenants. Rent as an airbnb or long term."
             linkText="Add Property"
-            linkHref="/add-property.html"
+            linkHref="/properties/add"
             bgColor="bg-blue-100"
             buttonColor="bg-blue-500 hover:bg-blue-600"
           />

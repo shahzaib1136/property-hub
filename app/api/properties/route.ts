@@ -7,16 +7,31 @@ import cloudinary from "@/config/cloudinary";
 import { getInt, getNumber, getObject, getString } from "@lib/utils";
 import { Property as PropertyTypes } from "@lib/types/property";
 import { decamelizeKeys } from "humps";
+import { parseQueryString } from "@lib/utils/searchParams";
 
-export const GET = async () => {
+export const GET = async (request: Request) => {
   try {
     await connectDB();
+    const { search } = new URL(request.url); // extract search string, e.g., "?type=House&location=Berlin"
 
-    const properties = await Property.find({});
+    const query = parseQueryString(search);
+
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 6;
+
+    const skip = (page - 1) * limit;
+    const total = await Property.countDocuments();
+
+    const properties = await Property.find({})
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    const pages = Math.ceil(total / limit);
 
     return createResponse(
       true,
-      properties,
+      { properties, page, pages },
       "Properties fetched successfully",
       200
     );

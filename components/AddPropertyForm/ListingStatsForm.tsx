@@ -1,6 +1,6 @@
 import React from "react";
 import InputField from "@/components/UI/InputField";
-import { ChangeHandler } from "@/components/PropertyForm/types";
+import { ChangeHandler } from "@/components/AddPropertyForm/types";
 import { Property } from "@lib/types/property";
 
 interface Props {

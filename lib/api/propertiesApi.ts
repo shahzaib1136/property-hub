@@ -1,12 +1,17 @@
-import { Property } from "@lib/types/property";
+import {
+  Property,
+  PropertyResponse,
+  FetchPropertiesParams,
+} from "@lib/types/property";
 
 import axiosApi from "@lib/utils/api";
 import { createQueryString } from "@lib/utils/searchParams";
 
 // Fetch all properties
-async function fetchProperties() {
+async function fetchProperties({ page = 1, limit = 6 }: FetchPropertiesParams) {
   try {
-    const res: Property[] = await axiosApi("/properties");
+    const res: PropertyResponse =
+      (await axiosApi(`/properties?page=${page}&limit=${limit}`)) || [];
 
     return res;
   } catch (error) {

@@ -31,7 +31,7 @@ const validationSchema = Yup.object({
 
 const PropertyContactForm = ({ property }: { property?: Property }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const { user } = useAppContext();
+  const { state } = useAppContext();
 
   const handleSubmit = async (values: FormikValues) => {
     const dataToSubmit = {
@@ -75,12 +75,12 @@ const PropertyContactForm = ({ property }: { property?: Property }) => {
     !(Object.keys(formik.errors).length === 0) ||
     formik.isSubmitting;
 
-  const isSenderRecipient = property?.owner === user?.id;
+  const isSenderRecipient = property?.owner === state.user?.id;
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
       <h3 className="text-xl font-bold mb-6">Contact Property Manager</h3>
-      {!user ? (
+      {!state.user ? (
         <p className="text-lg">You need to be logged in to send a message.</p>
       ) : isSenderRecipient ? (
         <p className="text-green-600 font-bold text-lg">

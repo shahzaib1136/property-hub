@@ -31,4 +31,38 @@ async function fetchMessages() {
   }
 }
 
-export { PostPropertyMessage, fetchMessages };
+async function markAsReadMessages(id: string) {
+  try {
+    const res: MessageResponseType[] = await axiosApi(`/messages/${id}`, "PUT");
+
+    return res;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("fetch messages failed:", error);
+      throw new Error(error.message); // Now passing a string message
+    }
+  }
+}
+
+async function deleteMessageApi(id: string) {
+  try {
+    const res: MessageResponseType[] = await axiosApi(
+      `/messages/${id}`,
+      "DELETE"
+    );
+
+    return res;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("delete messages failed:", error);
+      throw new Error(error.message); // Now passing a string message
+    }
+  }
+}
+
+export {
+  PostPropertyMessage,
+  fetchMessages,
+  markAsReadMessages,
+  deleteMessageApi,
+};

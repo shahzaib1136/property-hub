@@ -36,3 +36,14 @@ export type Property = {
   updatedAt?: string; // ISO date string
   hasContacted: boolean;
 };
+
+export interface FetchPropertiesParams {
+  page?: number;
+  limit?: number;
+}
+
+export interface PropertyResponse {
+  properties: Property[];
+  page: number;
+  pages: number;
+}

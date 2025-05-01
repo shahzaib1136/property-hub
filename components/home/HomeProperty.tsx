@@ -6,18 +6,18 @@ import Link from "next/link";
 import { fetchProperties } from "@lib/api/propertiesApi";
 
 const HomeProperty: React.FC = async () => {
-  const properties = (await fetchProperties()) || [];
+  const { properties } = (await fetchProperties({})) || {};
 
   // Shuffle properties array randomly
-  const shuffledProperties = properties.sort(
+  const shuffledProperties = properties?.sort(
     () => Math.random() - Math.random()
   );
 
   // Slice top 3 properties
-  const topProperties = shuffledProperties.slice(0, 3);
+  const topProperties = shuffledProperties?.slice(0, 3);
 
   const renderProperties = () => {
-    if (topProperties.length === 0) {
+    if (topProperties?.length === 0) {
       return (
         <div className="col-span-3 text-center text-xl text-gray-600">
           No properties found.
@@ -25,7 +25,7 @@ const HomeProperty: React.FC = async () => {
       );
     }
 
-    return topProperties.map((property) => (
+    return topProperties?.map((property) => (
       <PropertyCard property={property as Property} key={property.id} />
     ));
   };

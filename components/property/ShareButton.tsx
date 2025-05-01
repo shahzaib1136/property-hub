@@ -12,12 +12,12 @@ import {
 } from "react-share";
 
 const ShareButton = ({ property }: { property?: Property }) => {
-  const { user } = useAppContext();
+  const { state } = useAppContext();
 
   const { id, name = "" } = property || {};
   const URL = `${process.env.NEXT_PUBLIC_DOMAIN}/properties/${id}`;
 
-  if (!user) {
+  if (!state.user) {
     return null;
   }
 

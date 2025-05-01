@@ -1,11 +1,11 @@
 import { Property } from "@lib/types/property";
-import LocationFields from "@/components/PropertyForm/LocationFields";
-import AmenitiesCheckboxes from "@/components/PropertyForm/AmenitiesCheckboxes";
-import RateFields from "@/components/PropertyForm/RateFields";
-import SellerFields from "@/components/PropertyForm/SellerFields";
-import PropertyDetailsFields from "@/components/PropertyForm/PropertyDetailsFields";
-import ListingStatsForm from "@/components/PropertyForm/ListingStatsForm";
-import { ChangeHandler } from "@/components/PropertyForm/types";
+import LocationFields from "@/components/AddPropertyForm/LocationFields";
+import AmenitiesCheckboxes from "@/components/AddPropertyForm/AmenitiesCheckboxes";
+import RateFields from "@/components/AddPropertyForm/RateFields";
+import SellerFields from "@/components/AddPropertyForm/SellerFields";
+import PropertyDetailsFields from "@/components/AddPropertyForm/PropertyDetailsFields";
+import ListingStatsForm from "@/components/AddPropertyForm/ListingStatsForm";
+import { ChangeHandler } from "@/components/AddPropertyForm/types";
 
 interface PropertyFormProps {
   handleChange: ChangeHandler;

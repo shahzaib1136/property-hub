@@ -67,7 +67,8 @@ export async function GET() {
 
     const newMessage = await Message.find({ recipient: session.userId })
       .populate("property", "name")
-      .populate("sender", "username");
+      .populate("sender", "username")
+      .sort({ read: 1, createdAt: -1 });
 
     return createResponse(true, newMessage, "Message fetch successfully!", 200);
   } catch (error) {

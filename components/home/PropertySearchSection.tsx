@@ -1,4 +1,4 @@
-import PropertySearchForm from "@/components/PropertyForm/PropertySearchForm";
+import PropertySearchForm from "@/components/AddPropertyForm/PropertySearchForm";
 
 const PropertySearchSection = () => {
   return (

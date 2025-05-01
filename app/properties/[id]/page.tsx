@@ -12,7 +12,7 @@ import Spinner from "@/components/common/Spinner";
 import PropertyImages from "@/components/property/PropertyImages";
 import BookmarkButton from "@/components/property/BookmarkButton";
 import ShareButton from "@/components/property/ShareButton";
-import PropertyContactForm from "@/components/PropertyForm/PropertyContactForm";
+import PropertyContactForm from "@/components/AddPropertyForm/PropertyContactForm";
 
 function PropertyPage() {
   const { id } = useParams<{ id: string }>();

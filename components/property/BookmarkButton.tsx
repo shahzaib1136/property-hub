@@ -10,7 +10,9 @@ const BookmarkButton = ({ propertyId }: { propertyId: string }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
-  const { user } = useAppContext();
+  const { state } = useAppContext();
+
+  const { user } = state;
 
   useEffect(() => {
     if (!propertyId || !user) {

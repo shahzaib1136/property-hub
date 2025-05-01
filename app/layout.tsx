@@ -55,9 +55,9 @@ const RootLayout = ({
 }>) => {
   return (
     <AuthSessionProvider>
-      <AppProvider>
-        <html lang="en">
-          <body className="flex flex-col min-h-screen">
+      <html lang="en">
+        <body className="flex flex-col min-h-screen">
+          <AppProvider>
             <Navbar />
             <main>{children}</main>
             <Footer />
@@ -72,9 +72,9 @@ const RootLayout = ({
               pauseOnHover
               theme="colored"
             />
-          </body>
-        </html>
-      </AppProvider>
+          </AppProvider>
+        </body>
+      </html>
     </AuthSessionProvider>
   );
 };

@@ -45,7 +45,6 @@ const propertySchema: Schema = new Schema(
     },
     type: {
       type: String,
-      enum: ["Apartment", "Condo", "House", "Cottage Or Cabin", "Chalet"],
       required: true,
     },
     description: {
