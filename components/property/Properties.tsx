@@ -12,7 +12,8 @@ const LIMIT = 6;
 const Properties = () => {
   const [properties, setProperties] = useState<Property[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const isInitialLoad = useRef(true);
 
@@ -24,12 +25,16 @@ const Properties = () => {
         pages = 1,
       } = (await fetchProperties({ page: currentPage, limit: LIMIT })) || {};
 
+      const hasMore = page < pages;
+
       if (properties?.length > 0) {
         setProperties((prev) => [...prev, ...properties]);
-        setCurrentPage((prev) => prev + 1);
-        setHasMore(page < pages);
-      } else {
-        setHasMore(false);
+
+        if (hasMore) {
+          setCurrentPage((prev) => prev + 1);
+        }
+        setIsLoading(false);
+        setHasMore(hasMore);
       }
     } catch (err) {
       console.error(err);
@@ -46,23 +51,26 @@ const Properties = () => {
   return (
     <section className="px-4 py-6">
       <div className="container-xl lg:container m-auto px-4 py-6">
-        <InfiniteScroll
-          dataLength={properties.length}
-          next={loadProperties}
-          hasMore={hasMore}
-          loader={<Spinner loading={true} />}
-          endMessage={
-            <p className="text-center text-gray-500 mt-6 font-bold text-lg">
-              No more properties to show
-            </p>
-          }
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {properties.map((property) => (
-              <PropertyCard key={property.id} property={property} />
-            ))}
+        {isLoading ? (
+          <Spinner loading={true} />
+        ) : properties.length === 0 && !hasMore && !isLoading ? (
+          <div className="text-center text-gray-500 text-xl font-semibold">
+            No properties found.
           </div>
-        </InfiniteScroll>
+        ) : (
+          <InfiniteScroll
+            dataLength={properties.length}
+            next={loadProperties}
+            hasMore={hasMore}
+            loader={<Spinner loading={true} />}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {properties.map((property) => (
+                <PropertyCard key={property.id} property={property} />
+              ))}
+            </div>
+          </InfiniteScroll>
+        )}
       </div>
     </section>
   );

@@ -4,9 +4,14 @@ import { Property } from "@lib/types/property";
 import PropertyCard from "@/components/PropertyCard";
 import Link from "next/link";
 import { fetchProperties } from "@lib/api/propertiesApi";
+import { unstable_noStore as noStore } from "next/cache";
+
+export const dynamic = "force-dynamic"; // 👈 this disables static caching
 
 const HomeProperty: React.FC = async () => {
-  const { properties } = (await fetchProperties({})) || {};
+  noStore();
+
+  const { properties = [] } = (await fetchProperties({})) || {};
 
   // Shuffle properties array randomly
   const shuffledProperties = properties?.sort(

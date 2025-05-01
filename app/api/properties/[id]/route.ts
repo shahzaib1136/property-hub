@@ -4,6 +4,7 @@ import { createResponse, handleError } from "@lib/utils/response";
 import { NextRequest } from "next/server";
 import { getUserSession } from "@lib/utils/getUserSession";
 import Message from "@/models/Messages";
+import { revalidatePath } from "next/cache";
 
 export const GET = async (
   req: Request,
@@ -96,6 +97,7 @@ export const DELETE = async (
     }
 
     await Property.findByIdAndDelete(id);
+    revalidatePath("/");
 
     return createResponse(true, null, "Property deleted successfully", 200);
   } catch (error) {

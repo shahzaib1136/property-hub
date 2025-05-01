@@ -11,7 +11,12 @@ import { createQueryString } from "@lib/utils/searchParams";
 async function fetchProperties({ page = 1, limit = 6 }: FetchPropertiesParams) {
   try {
     const res: PropertyResponse =
-      (await axiosApi(`/properties?page=${page}&limit=${limit}`)) || [];
+      (await axiosApi(
+        `/properties?page=${page}&limit=${limit}`,
+        "GET",
+        {},
+        { cache: "no-store" }
+      )) || [];
 
     return res;
   } catch (error) {
