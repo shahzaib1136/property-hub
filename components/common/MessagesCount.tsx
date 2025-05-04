@@ -7,7 +7,7 @@ const MessagesCount = () => {
     state: { messages },
   } = useAppContext();
 
-  const unreadMessageCount = messages.data.map(({ read }) => !read).length;
+  const unreadMessageCount = messages.data.filter(({ read }) => !read).length;
 
   return (
     <Link href="/messages" className="relative group">
@@ -32,9 +32,11 @@ const MessagesCount = () => {
           />
         </svg>
       </button>
-      <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
-        {unreadMessageCount || 0}
-      </span>
+      {!!unreadMessageCount && (
+        <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+          {unreadMessageCount || 0}
+        </span>
+      )}
     </Link>
   );
 };
