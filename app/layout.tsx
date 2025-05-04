@@ -4,6 +4,8 @@ import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 import AuthSessionProvider from "@/components/layout/AuthSessionProvider";
 import { ToastContainer } from "react-toastify";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import "@assets/styles/global.css";
 import "react-toastify/dist/ReactToastify.css"; // Important: import styles!
@@ -73,6 +75,8 @@ const RootLayout = ({
               theme="colored"
             />
           </AppProvider>
+          <Analytics />
+          <SpeedInsights />
         </body>
       </html>
     </AuthSessionProvider>
