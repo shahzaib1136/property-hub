@@ -9,14 +9,14 @@ describe("Spinner Component", () => {
 
   it("should render the ClipLoader when loading is true", () => {
     render(<Spinner loading={true} />);
-    const spinner = screen.getByRole("status1");
+    const spinner = screen.getByRole("status");
     expect(spinner).toBeInTheDocument();
     expect(spinner).toHaveAttribute("aria-label", "Loading Spinner");
   });
 
   it("should apply default styles", () => {
     render(<Spinner loading={true} />);
-    const spinner = screen.getByRole("status1");
+    const spinner = screen.getByRole("status");
 
     // Check if default styles are applied
     expect(spinner).toHaveStyle({
@@ -28,7 +28,7 @@ describe("Spinner Component", () => {
   it("should merge custom styles with default styles", () => {
     const customStyle = { margin: "50px auto", backgroundColor: "red" };
     render(<Spinner loading={true} style={customStyle} />);
-    const spinner = screen.getByRole("status1");
+    const spinner = screen.getByRole("status");
 
     expect(spinner).toHaveStyle({
       display: "block", // from default
@@ -51,7 +51,7 @@ describe("Spinner Component", () => {
 
   it("should apply custom className", () => {
     render(<Spinner loading={true} className="custom-class" />);
-    const spinner = screen.getByRole("status1");
+    const spinner = screen.getByRole("status");
     expect(spinner).toHaveClass("custom-class");
   });
 });
