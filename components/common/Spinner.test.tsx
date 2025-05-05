@@ -49,9 +49,9 @@ describe("Spinner Component", () => {
     expect(spinner).toBeInTheDocument();
   });
 
-  //   it("should apply custom className", () => {
-  //     render(<Spinner loading={true} className="custom-class" />);
-  //     const spinner = screen.getByRole("status1");
-  //     expect(spinner).toHaveClass("custom-class");
-  //   });
+  it("should apply custom className", () => {
+    render(<Spinner loading={true} className="custom-class" />);
+    const spinner = screen.getByRole("status1");
+    expect(spinner).toHaveClass("custom-class");
+  });
 });
