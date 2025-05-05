@@ -45,7 +45,7 @@ describe("Spinner Component", () => {
     expect(overlay).toHaveClass("fixed inset-0");
     expect(overlay).toHaveClass("bg-black bg-opacity-50");
 
-    const spinner = screen.getByRole("status1");
+    const spinner = screen.getByRole("status");
     expect(spinner).toBeInTheDocument();
   });
 
