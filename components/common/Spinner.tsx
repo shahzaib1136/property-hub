@@ -1,5 +1,3 @@
-"use client";
-
 import ClipLoader from "react-spinners/ClipLoader";
 import { CSSProperties } from "react";
 
@@ -34,13 +32,19 @@ const Spinner = ({
       cssOverride={{ ...defaultOverride, ...style }}
       size={size}
       aria-label="Loading Spinner"
+      aria-busy={loading}
       className={className}
+      role="status"
+      data-testid="spinner"
     />
   );
 
   if (overlay) {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+      <div
+        className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+        data-testid="spinner-overlay"
+      >
         {spinnerElement}
       </div>
     );

@@ -77,6 +77,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
         alt="User profile"
         width={240}
         height={240}
+        loading="lazy"
       />
     </button>
     {isOpen && (
@@ -159,6 +160,12 @@ const Navbar: React.FC = () => {
   const toggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev);
   const toggleUserMenu = () => setIsUserMenuOpen((prev) => !prev);
 
+  const handleSignIn = (providerId: string) => {
+    signIn(providerId);
+  };
+
+  const isLoggedIn = session && !isSessionLoading;
+
   return (
     <nav className="bg-blue-700 border-b border-blue-500">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -195,7 +202,12 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
             <Link className="flex flex-shrink-0 items-center" href="/">
-              <Image className="h-10 w-auto" src={logo} alt="PropertyPulse" />
+              <Image
+                className="h-10 w-auto"
+                src={logo}
+                alt="PropertyPulse"
+                loading="lazy"
+              />
               <span className="hidden md:block text-white text-2xl font-bold ml-2">
                 PropertyPulse
               </span>
@@ -210,7 +222,7 @@ const Navbar: React.FC = () => {
                   label="Properties"
                   isActive={isActive("/properties")}
                 />
-                {session && !isSessionLoading && (
+                {isLoggedIn && (
                   <MenuLink
                     href="/properties/add"
                     label="Add Property"
@@ -228,7 +240,7 @@ const Navbar: React.FC = () => {
                 return (
                   <button
                     className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
-                    onClick={() => signIn(id)}
+                    onClick={() => handleSignIn(id)}
                     key={id}
                   >
                     <FaGoogle className="mr-2" />
@@ -240,7 +252,7 @@ const Navbar: React.FC = () => {
           )}
 
           {/* User Menu */}
-          {session && !isSessionLoading && (
+          {isLoggedIn && (
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
               <MessagesCount />
               <UserMenu
@@ -269,7 +281,7 @@ const Navbar: React.FC = () => {
             isActive={isActive("/properties")}
             onClick={toggleMobileMenu}
           />
-          {session && !isSessionLoading && (
+          {isLoggedIn && (
             <MenuLink
               href="/properties/add"
               label="Add Property"
@@ -284,7 +296,7 @@ const Navbar: React.FC = () => {
                 <button
                   className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4"
                   key={id}
-                  onClick={() => signIn(id)}
+                  onClick={() => handleSignIn(id)}
                 >
                   <FaGoogle className="mr-2" />
                   <span>Login or Register</span>
