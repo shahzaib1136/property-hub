@@ -8,19 +8,28 @@ on:
 
 jobs:
   test:
-    name: Run tests on PR (CI)
+    name: Run tests on PR
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Run tests
-        run: npm test
+      - name: Run tests with verbose output
+        run: |
+          echo "Starting tests..."
+          npm test -- --verbose
+          echo "Test execution completed"
+        env:
+          CI: true
+
+      - name: Verify build
+        run: npm run build
